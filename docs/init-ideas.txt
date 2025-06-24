@@ -1,0 +1,8 @@
+Lift-Media Core Features:
+-- Lift log/Tracker
+	- create unique exercise templates
+	- enable user to combine templates into a X day program
+	- user can log their workouts and see a comprehensive view in a calendar
+-- Social media aspect
+	- users can share programs with their friends
+	- users can post daily workouts, these appear in the "feed"
