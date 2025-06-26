@@ -6,3 +6,5 @@ Lift-Media Core Features:
 -- Social media aspect
 	- users can share programs with their friends
 	- users can post daily workouts, these appear in the "feed"
+-- Side Quests
+	- Make a discord bot to send push and pr alerts to discord server
