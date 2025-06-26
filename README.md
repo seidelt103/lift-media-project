@@ -1,2 +1,2 @@
 # lift-media-project
-Simple Lift and Social Media Application
+Simple Lift Log and Social Media Application
