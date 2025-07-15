@@ -1,0 +1,12 @@
+services:
+  db:
+    image: postgres:17.5
+    restart: always
+    environment:
+      POSTGRES_DB: lift-media
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mysecretpassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+volumes:
+  pgdata:
