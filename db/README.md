@@ -15,3 +15,5 @@ Links used for init creation:
 https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
 https://github.com/docker-library/docs/blob/master/postgres/README.md#database-configuration
 https://docs.docker.com/engine/containers/run/
+
+NOTE: this is all subject to change as the project is developed but is serving as a template for how the readme for the db should look
