@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'LiftTracker',
+    'LiftTracker.apps.LifttrackerConfig',
 ]
 
 # CORS settings
@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'DjangoApi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lift-media',
+        'USER': 'myuser',
+        'PASSWORD': 'mysecretpassword',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

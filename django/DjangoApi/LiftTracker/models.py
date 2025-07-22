@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 class LiftTemplate(models.Model):
+    LiftTemplateId = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
