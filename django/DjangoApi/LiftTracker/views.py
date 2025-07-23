@@ -14,28 +14,36 @@ def liftTemplateApi(request, id=0):
     if request.method=='GET':
         liftTemplate = LiftTemplate.objects.all()
         liftTemplate_serializer = LiftTemplateSerializer(liftTemplate, many=True)
+
         return JsonResponse(liftTemplate_serializer.data, safe=False)
+    
     # Inserting data
     elif request.method=='POST':
         liftTemplate_data = JSONParser().parse(request)
         liftTemplate_serializer = LiftTemplateSerializer(data=liftTemplate_data)
+
         if liftTemplate_serializer.is_valid():
             liftTemplate_serializer.save()
+
             return JsonResponse("Added Successfully", safe=False)
         return JsonResponse("Failed to Add", safe=False)
+    
     # Updating existing data
     elif request.method=='PUT':
         liftTemplate_data=JSONParser().parse(request)
         # Attempting to get PK id from Lift Template table
         liftTemplate = LiftTemplate.objects.get(LiftTemplateId = liftTemplate_data['LiftTemplateId'])
         liftTemplate_serializer = LiftTemplateSerializer(liftTemplate, data = liftTemplate_data)
+
         if liftTemplate_serializer.is_valid():
             liftTemplate_serializer.save()
             return JsonResponse("Updated Successfully", safe=False)
         return JsonResponse("Failed to Update")
+    
     # Deleting existing data
     elif request.method=='DELETE':
         # References id passed into this overall function
         liftTemplate = LiftTemplate.objects.get(LiftTemplateId = id)
         liftTemplate.delete()
+
         return JsonResponse("Deleted Successfully", safe=False)
