@@ -4,9 +4,6 @@ import axios from 'axios'
 function App() {
 
   const [liftData, setLiftData] = useState([])
-  // Chose to update data on the frontend
-  const [refresh, setRefresh] = useState(false)
-  
 
   // Use backticks, not apostrophes
   const endpoint = `${import.meta.env.VITE_API_URL}`
@@ -37,8 +34,8 @@ function App() {
     const newData = await postData()
     console.log(newData)
     if (newData) {
-      // Takes into a new array old data and adds newly created object
-      setLiftData(prevState => [...prevState, newData])
+      // Fetches full list including new item with LiftTemplateId, fixes missing key during fetch problem
+      await fetchData()
     }
   }
 
@@ -50,7 +47,7 @@ function App() {
   return (
     <>
       <ul>
-        {liftData.map(el => <li key={el.LiftTemplateId}>{el.name} {el.description} | {el.created_at} | {el.updated_at} | {el.sets} | {el.reps}</li>)}
+        {liftData.map(el => <li key={el.LiftTemplateId}>{el.LiftTemplateId} {el.name} {el.description} | {el.created_at} | {el.updated_at} | {el.sets} | {el.reps}</li>)}
       </ul>
       <button onClick={handleSendData}>Enter lift</button>
     </>
