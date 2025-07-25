@@ -1,13 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Gets rid of favicon icon error in console, browser looks for it -->
+  <link rel="shortcut icon" href="#">
+  <title>Fitness WebApp Landing Page</title>
+</head>
+
+<body>
+  <div class="header">
+
+  </div>
+  <div class="mycontainer">
+    <div>
+      <!-- Pull friend count from database -->
+      <h1>20</h1>
+      <p>total friends</p>
+      <!-- Need to edit to white -->
+      <img src="person.svg" alt="Person Logo">
+      
+      <a href="FriendsPage.html">
+        <button class="nav-buttons">Friends Page</button>
+      </a>
+
+    </div>
+
+    <div>
+      <!-- Pull unseen posts count from database -->
+      <h1>8</h1>
+      <p>new unseen posts</p>
+      <!-- Need to edit to white -->
+      <img src="bell.svg" alt="Bell Logo">
+      <a href="SocialFeed.html">
+        <button class="nav-buttons">Social Feed</button>
+      </a>
+
+    </div>
+
+    <div>
+      <!-- Pull workouts done this year count from database -->
+      <h1>44</h1>
+      <p>workouts done this year</p>
+      <img src="bicycle.svg" alt="Bicycle Logo">
+
+      <a href="Lifts.html">
+        <button class="nav-buttons">Lifts</button>
+      </a>
+    </div>
+  </div>
+
+  <div id="root"></div>
+
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
