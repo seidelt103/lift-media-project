@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './css/LiftForm.css';
 
 function LiftForm({ onAddLift }) {
   const [name, setName] = useState('');
@@ -14,18 +15,20 @@ function LiftForm({ onAddLift }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="lift-form" onSubmit={handleSubmit}>
       <input
+        className="lift-input"
         value={name}
         onChange={e => setName(e.target.value)}
         placeholder="Lift name"
       />
       <input
+        className="lift-input"
         value={description}
         onChange={e => setDescription(e.target.value)}
         placeholder="Description"
       />
-      <button type="submit">Enter lift</button>
+      <button className="lift-submit" type="submit">Enter lift</button>
     </form>
   );
 }

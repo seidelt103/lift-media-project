@@ -1,34 +1,21 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios'
-
-import LiftList from './components/lifts/LiftList';
-import LiftForm from './components/lifts/LiftForm';
-
+// Package Imports
+import { Routes, Route } from 'react-router-dom'
+import NavBar from './components/landingPage/NavBar'
+// Page imports
+import FriendsPage from './pages/FriendPage'
+import LiftsPage from './pages/Lifts'
+import SocialFeedPage from './pages/SocialFeed'
 
 function App() {
-  const [liftData, setLiftData] = useState([]);
-    // Use backticks, not apostrophes
-  const endpoint = `${import.meta.env.VITE_API_URL}`;
-
-  const fetchData = async () => {
-    const response = await axios.get(endpoint);
-    setLiftData(response.data);
-  };
-
-  const addLift = async (name, description) => {
-    await axios.post(endpoint, { name, description });
-    fetchData();
-  };
-
-  // Side effect for fetching data
-  useEffect(() => {
-    fetchData()
-  }, [])
-
   return (
     <>
-      <LiftList lifts={liftData} />
-      <LiftForm onAddLift={addLift} />
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<LiftsPage />} />
+        <Route path="/friends" element={<FriendsPage />} />
+        <Route path="/lifts" element={<LiftsPage />} />
+        <Route path="/social" element={<SocialFeedPage />} />
+      </Routes>
     </>
   );
 }

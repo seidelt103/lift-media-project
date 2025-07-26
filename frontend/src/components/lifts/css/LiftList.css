@@ -1,0 +1,44 @@
+.lift-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+  gap: 1.2rem;
+  justify-items: center;
+  width: 100%;
+}
+
+.lift-card {
+  background: #004346;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 1.5rem 1.5rem;
+  min-width: 260px;
+  max-width: 340px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border: 2px solid #FFFFFF;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+.lift-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.lift-desc {
+  color: #75DDDD;
+  font-size: 1.05rem;
+}
+
+.lift-meta, .lift-dates {
+  font-size: 1rem;
+  color: #09BC8A;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}

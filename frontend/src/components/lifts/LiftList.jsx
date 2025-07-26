@@ -1,12 +1,23 @@
+import './css/LiftList.css';
+
 function LiftList({ lifts }) {
   return (
-    <ul>
+    <div className="lift-list">
       {lifts.map(el => (
-        <li key={el.LiftTemplateId}>
-          {el.LiftTemplateId} {el.name} {el.description} | {el.created_at} | {el.updated_at} | {el.sets} | {el.reps}
-        </li>
+        <div className="lift-card" key={el.LiftTemplateId}>
+          <div className="lift-title">{el.name}</div>
+          <div className="lift-desc">{el.description}</div>
+          <div className="lift-meta">
+            <span>Sets: {el.sets}</span>
+            <span>Reps: {el.reps}</span>
+          </div>
+          <div className="lift-dates">
+            <span>Created: {el.created_at}</span>
+            <span>Updated: {el.updated_at}</span>
+          </div>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }
 

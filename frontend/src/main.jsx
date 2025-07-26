@@ -1,11 +1,14 @@
+// React imports
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+// CSS importsq
 import './index.css'
+// Page imports
 import App from './App.jsx'
 
-// Removed root from index.css I think so not sure how this is working
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
+  <BrowserRouter>
     <App />
-  // </StrictMode>,
+  </BrowserRouter>
 )
