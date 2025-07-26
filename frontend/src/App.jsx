@@ -1,43 +1,24 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 
+import LiftList from './components/lifts/LiftList';
+import LiftForm from './components/lifts/LiftForm';
+
+
 function App() {
+  const [liftData, setLiftData] = useState([]);
+    // Use backticks, not apostrophes
+  const endpoint = `${import.meta.env.VITE_API_URL}`;
 
-  const [liftData, setLiftData] = useState([])
+  const fetchData = async () => {
+    const response = await axios.get(endpoint);
+    setLiftData(response.data);
+  };
 
-  // Use backticks, not apostrophes
-  const endpoint = `${import.meta.env.VITE_API_URL}`
-
-  const fetchData = async() => {
-    console.log('fetching...')
-    const response = await axios.get(endpoint)
-    console.log(response)
-    const { data } = response
-    setLiftData(data)
-    console.log(data)
-
-    return data
-  }
-
-  const postData = async() => {
-    const name = 'test z'
-    const description = 'test z desc'
-    const body = {name, description}
-
-    const response = await axios.post(endpoint, body)
-    console.log(response)
-
-    return response.data
-  }
-
-  const handleSendData = async() => {
-    const newData = await postData()
-    console.log(newData)
-    if (newData) {
-      // Fetches full list including new item with LiftTemplateId, fixes missing key during fetch problem
-      await fetchData()
-    }
-  }
+  const addLift = async (name, description) => {
+    await axios.post(endpoint, { name, description });
+    fetchData();
+  };
 
   // Side effect for fetching data
   useEffect(() => {
@@ -46,10 +27,8 @@ function App() {
 
   return (
     <>
-      <ul>
-        {liftData.map(el => <li key={el.LiftTemplateId}>{el.LiftTemplateId} {el.name} {el.description} | {el.created_at} | {el.updated_at} | {el.sets} | {el.reps}</li>)}
-      </ul>
-      <button onClick={handleSendData}>Enter lift</button>
+      <LiftList lifts={liftData} />
+      <LiftForm onAddLift={addLift} />
     </>
   );
 }
