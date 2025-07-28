@@ -1,0 +1,43 @@
+.lift-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #004346;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  align-items: center;
+  margin: 1.5rem auto 2rem auto; /* Add bottom margin for spacing below */
+  width: 320px;                  /* Make the form smaller */
+}
+
+.lift-input {
+  width: 90%;
+  padding: 0.5rem 0.8rem;
+  border: 2px solid #75DDDD;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f8f9fa;
+  color: #004346;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.lift-input:focus {
+  border: 2px solid #09BC8A;
+}
+
+.lift-submit {
+  background: #4caf50;
+  color: white;
+  border: 2px solid white;
+  border-radius: 6px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.lift-submit:hover {
+  background: #45a049;
+}

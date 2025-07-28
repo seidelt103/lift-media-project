@@ -1,0 +1,46 @@
+.three-col-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: none;
+} 
+
+.nav-col {
+  flex: 1 1 0; /* All columns take equal width */
+  display: flex;
+}
+
+.left-col {
+  justify-content: flex-start;
+}
+
+.center-col {
+  justify-content: center;
+}
+
+.right-col {
+  justify-content: flex-end;
+}
+
+.nav-buttons {
+  background: #4caf50;
+  color: white;
+  border: 2px solid white;
+  width: 20rem;           /* Fixed width for all buttons */
+  height: 5rem;           /* Fixed height */
+  margin: 0 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0;
+}
+
+.nav-buttons:hover {
+  background: #388e3c;
+}
