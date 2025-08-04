@@ -1,0 +1,22 @@
+.image {
+  background-image: url('../../../assets/gym.jpg'); /* Currently in css folder, go up three levels */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Makes image container a positioned ancestor for SignUp-Login box */
+  position: relative;
+}
+
+.SignUp-Login {
+    position: absolute;
+    /* Aligns bottom edge of box to bottom of positioned ancestor */
+    bottom: 0;
+    /* Use percentages for better consistency acrossed different screen resolutions */
+    width: 100%;
+    height: 30.5%;
+    background-color: #12151c;
+}
