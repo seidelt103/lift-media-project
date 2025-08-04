@@ -12,8 +12,8 @@ function LiftsPage() {
     setLiftData(response.data);
   };
 
-  const addLift = async (name, description) => {
-    await axios.post(endpoint, { name, description });
+  const addLift = async (name, sets, reps, weight) => {
+    await axios.post(endpoint, { name, sets, reps, weight });
     fetchData();
   };
 

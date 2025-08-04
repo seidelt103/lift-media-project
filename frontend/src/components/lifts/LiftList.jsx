@@ -2,21 +2,30 @@ import './css/LiftList.css';
 
 function LiftList({ lifts }) {
   return (
-    <div className="lift-list">
-      {lifts.map(el => (
-        <div className="lift-card" key={el.LiftTemplateId}>
-          <div className="lift-title">{el.name}</div>
-          <div className="lift-desc">{el.description}</div>
-          <div className="lift-meta">
-            <span>Sets: {el.sets}</span>
-            <span>Reps: {el.reps}</span>
-          </div>
-          <div className="lift-dates">
-            <span>Created: {el.created_at}</span>
-            <span>Updated: {el.updated_at}</span>
-          </div>
-        </div>
-      ))}
+    <div className="lifts">
+      <table>
+            <thead>
+                <tr>
+                  {/* Hard coded for now, will need to pull headers from db later */}
+                    <th>Name</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight</th>
+                    {/* Add more headers as needed */}
+                </tr>
+            </thead>
+            <tbody>
+                {lifts.map(lift => (
+                    <tr key={lift.id}> {/* Use a unique key for each row */}
+                        <td>{lift.name}</td>
+                        <td>{lift.sets}</td>
+                        <td>{lift.reps}</td>
+                        <td>{lift.weight}</td>
+                        {/* Add more cells as needed */}
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     </div>
   );
 }

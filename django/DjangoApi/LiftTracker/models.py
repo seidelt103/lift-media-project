@@ -5,8 +5,6 @@ from django.db import models
 class LiftTemplate(models.Model):
     LiftTemplateId = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     sets = models.PositiveIntegerField(default=3)
     reps = models.PositiveIntegerField(default=10)
+    weight = models.PositiveIntegerField(default=100)
