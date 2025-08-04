@@ -1,10 +1,11 @@
 .image {
-  background-image: url('../../../assets/gym.jpg'); /* Currently in css folder, go up three levels */
+  background-image: url('../../../assets/gym.jpg');
+  /* Currently in css folder, go up three levels */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
   display: flex;
+  height: 88vh;
   justify-content: center;
   align-items: center;
   /* Makes image container a positioned ancestor for SignUp-Login box */
@@ -12,11 +13,52 @@
 }
 
 .SignUp-Login {
-    position: absolute;
-    /* Aligns bottom edge of box to bottom of positioned ancestor */
-    bottom: 0;
-    /* Use percentages for better consistency acrossed different screen resolutions */
-    width: 100%;
-    height: 30.5%;
-    background-color: #12151c;
+  position: absolute;
+  /* Aligns bottom edge of box to bottom of positioned ancestor */
+  bottom: 0;
+  /* Use percentages for better consistency acrossed different screen resolutions */
+  width: 100%;
+  height: 22vh;
+  background-color: #12151c;
+  display: flex;
+  gap: 50px;
+}
+
+
+.Ad {
+  font-size: 45px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 50px;
+  color: #FFFFFF;
+}
+
+.Msg {
+  width: 50%;
+}
+
+.buttons {
+  width: 30%;
+  margin: 55px 60px 55px auto;
+  text-align: center;
+  display: flex;
+  gap: 50px;
+}
+
+.account-buttons {
+  margin: 0px 10px;
+  width: 18vh;
+  height: 6vh;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 35px;
+  font-weight: bold;
+  color: white;
+  background-color: #7F7F7F;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px #000000;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.account-buttons:hover {
+  background-color: #BEBEBE;
 }
