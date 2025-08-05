@@ -2,7 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import './css/LiftList.css';
 
-function LiftList({ lifts }) {
+function LiftList({ lifts, fetchData }) {
+  console.clear();
   // Row being edited, represented by overall lift
   const [editingLiftId, setEditingLiftId] = useState(null);
   // Row values
@@ -39,7 +40,15 @@ function LiftList({ lifts }) {
 
   // When save is clicked, ternary used, sets new row (lift) values if new values are input, if not returns original row
   const handleSaveClick = async (liftId) => {
-    const updatedLift = editedValues[liftId];
+    // Packages data to be sent to backend in JSON format
+    const updatedLift = {
+      LiftTemplateId: liftId,
+      ...editedValues[liftId],
+      sets: Number(editedValues[liftId].sets),
+      reps: Number(editedValues[liftId].reps),
+      weight: Number(editedValues[liftId].weight),
+    };
+    console.log("PUT data:", updatedLift);
     await axios.put(`${endpoint}/${liftId}`, updatedLift);
     fetchData(); // Refresh the data from backend
     setEditingLiftId(null);

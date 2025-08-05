@@ -12,7 +12,8 @@ from LiftTracker.serializers import LiftTemplateSerializer
 def liftTemplateApi(request, id=0):
     # Retrieving data
     if request.method=='GET':
-        liftTemplate = LiftTemplate.objects.all()
+        # Orders lifts table by LiftTemplateId
+        liftTemplate = liftTemplate = LiftTemplate.objects.all().order_by('LiftTemplateId')
         liftTemplate_serializer = LiftTemplateSerializer(liftTemplate, many=True)
 
         return JsonResponse(liftTemplate_serializer.data, safe=False)
