@@ -25,7 +25,7 @@ function LiftsPage() {
     <div>
       <h1 style={{ textAlign: 'center' }}>Lifts</h1>
       <LiftForm onAddLift={addLift} />
-      <LiftList lifts={liftData} />
+      <LiftList lifts={liftData} fetchData={fetchData}/>
     </div>
   );
 }
