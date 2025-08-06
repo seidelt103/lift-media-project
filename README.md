@@ -2,13 +2,9 @@ This project spins up a Exercise Tracker web application
 
 The steps for running the project are as follows:
 
-1. Setup Database
+1. Setup Database and Django Backend
     a) open a terminal instance and navigate to the "db" project directory
-    b) run "docker compose -f db.yml up
-
-2. Setup backend
-    a) open a terminal instance and navgiate to the "DjangoApi" directory
-    b) run "py manage.py runserver"
+    b) run "docker compose up --build
 
 3. Setup frontend
     a) open a terminal instance and navigate to the "frontend" directory
