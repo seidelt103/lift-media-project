@@ -1,10 +1,61 @@
  table {
-   border: 2px solid #FFFFFF;
-   margin: auto;
- }
+  border-collapse: separate;
+  border-spacing: 10px; /* adds spacing between cells so border-radius shows */
+  margin: 5% auto;
+  background-color: #12151C;
+  border: 2px solid #FFFFFF;
+  border-radius: 30px;
+  table-layout: fixed;
+}
 
- th,
- td {
-   border: 1px solid black;
-   text-align: center;
- }
+th,
+td {
+  background-color: #12151c;
+  color: #FFFFFF;
+  border: 1px solid #BEBEBE;
+  border-radius: 25px;
+  padding: 10px 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* optional: for visual depth */
+}
+
+#action-btns {
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#edit-btn {
+  padding: 14px 28px;
+  margin-right: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #12151C; 
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  color: white;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+#edit-btn:hover {
+  background-color: #131d31; 
+  border: 2px solid #FFFFFF;
+}
+
+#delete-btn {
+  padding: 14px 28px;
+  font-size: 16px;
+  background-color: #f44336;
+  color: white;
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+#delete-btn:hover {
+  background-color: #911c14;
+  border: 2px solid #FFFFFF;
+}

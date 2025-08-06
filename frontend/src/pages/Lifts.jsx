@@ -5,16 +5,32 @@ import LiftForm from '../components/lifts/LiftForm';
 
 function LiftsPage() {
   const [liftData, setLiftData] = useState([]);
-  const endpoint = `${import.meta.env.VITE_API_URL}`;
+  const baseUrl = import.meta.env.VITE_API_URL;
 
   const fetchData = async () => {
-    const response = await axios.get(endpoint);
+    const response = await axios.get(`${baseUrl}`);
     setLiftData(response.data);
   };
 
-  const addLift = async (name, sets, reps, weight) => {
-    await axios.post(endpoint, { name, sets, reps, weight });
-    fetchData();
+  const addLift = async (lift_id, sets, reps, weight) => {
+    try {
+      console.log('Adding lift:', { lift_id, sets, reps, weight });
+      
+      const liftData = {
+        lift_name: lift_id, 
+        sets: parseInt(sets),
+        reps: parseInt(reps),
+        weight: parseFloat(weight)
+      };
+      
+      const response = await axios.post(`${baseUrl}`, liftData); 
+      console.log('Lift added successfully:', response.data);
+      
+      // Refresh the data after successful addition
+      await fetchData();
+    } catch (error) {
+      console.error('Error adding lift:', error.response?.data || error.message);
+    }
   };
 
   useEffect(() => {
@@ -23,9 +39,9 @@ function LiftsPage() {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }}>Lifts</h1>
-      <LiftForm onAddLift={addLift} />
+      <h1 style={{ textAlign: 'center', margin: '3rem 0 0 0' }}>Lifts</h1>
       <LiftList lifts={liftData} fetchData={fetchData}/>
+      <LiftForm onAddLift={addLift} />
     </div>
   );
 }

@@ -1,22 +1,37 @@
 .lift-form {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  background: #004346;
+  flex-direction: row;    /* Change to row for horizontal layout */
+  gap: 0.75rem;          /* spacing between items */
   padding: 1rem 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  align-items: center;
-  margin: 1.5rem auto 2rem auto; /* Add bottom margin for spacing below */
-  width: 320px;                  /* Make the form smaller */
+  align-items: center;   /* vertically center inputs */
+  margin: 1.5rem auto 2rem auto;
+  width: 900px;           /* auto width so it can grow horizontally */
+  max-width: 100%;       /* prevent overflow */
+  justify-content: center;
+  flex-wrap: wrap;       /* wrap to next line if too narrow */
+}
+
+select {
+  width: 150px;
+  padding: 10px 20px;
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  background: #f8f9fa;
+  color: #004346;
+  outline: none;
+  transition: border 0.2s;
 }
 
 .lift-input {
-  width: 90%;
-  padding: 0.5rem 0.8rem;
-  border: 2px solid #75DDDD;
-  border-radius: 6px;
-  font-size: 1rem;
+  width: 150px;           /* fixed smaller width */
+  padding: 10px 20px; 
+  background-color: #1B222C;
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  font-size: 0.9rem;
   background: #f8f9fa;
   color: #004346;
   outline: none;
@@ -28,16 +43,20 @@
 }
 
 .lift-submit {
-  background: #4caf50;
-  color: white;
-  border: 2px solid white;
-  border-radius: 6px;
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
+  width: 120px;        
+  padding: 10px 20px; /* smaller padding */
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  font-size: 16pxrem;
+  font-weight: bold;
+  background-color: #1B222C;
+  color: #FFFFFF;
+  outline: none;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+  white-space: nowrap;    /* prevent button text wrapping */
 }
 
 .lift-submit:hover {
-  background: #45a049;
+  background-color: #131d31; 
+  border: 2px solid #FFFFFF;
 }

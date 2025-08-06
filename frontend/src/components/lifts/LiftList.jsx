@@ -3,11 +3,11 @@ import axios from 'axios';
 import './css/LiftList.css';
 
 function LiftList({ lifts, fetchData }) {
-  console.clear();
   // Row being edited, represented by overall lift
   const [editingLiftId, setEditingLiftId] = useState(null);
   // Row values
   const [editedValues, setEditedValues] = useState({});
+  const [deletingLiftId, setDeletingLiftId] = useState(null);
 
   const endpoint = `${import.meta.env.VITE_API_URL}`;
 
@@ -48,7 +48,6 @@ function LiftList({ lifts, fetchData }) {
       reps: Number(editedValues[liftId].reps),
       weight: Number(editedValues[liftId].weight),
     };
-    console.log("PUT data:", updatedLift);
     await axios.put(`${endpoint}/${liftId}`, updatedLift);
     fetchData(); // Refresh the data from backend
     setEditingLiftId(null);
@@ -61,9 +60,20 @@ function LiftList({ lifts, fetchData }) {
     setEditedValues({});
   };
 
-  const handleDelete = () => {
-    console.log("Delete clicked");
-    // Perform actions here, e.g., update state, make API calls
+  const handleDelete = async (liftId) => {
+    await axios.delete(`${endpoint}/${liftId}`);
+    // Refresh data
+    fetchData();
+  };
+
+  // Delete confirmed
+  const handleDeleteClick = (liftId) => {
+    setDeletingLiftId(liftId);
+  };
+
+  // Delete cancelled
+  const handleCancelDelete = () => {
+    setDeletingLiftId(null);
   };
 
 
@@ -86,6 +96,7 @@ function LiftList({ lifts, fetchData }) {
           {lifts.map((lift) => (
             <tr key={lift.LiftTemplateId}>
               {editingLiftId === lift.LiftTemplateId ? (
+                // If matches editingLiftId, show edit inputs for row
                 <>
                   <td>
                     <input
@@ -120,15 +131,25 @@ function LiftList({ lifts, fetchData }) {
                     <button onClick={handleCancelClick}>Cancel</button>
                   </td>
                 </>
+              ) : deletingLiftId === lift.LiftTemplateId ? (
+                // Else if matches deleteLiftId, show delete confirmation
+                <>
+                  <td colSpan={4}>Are you sure you want to delete lift?</td>
+                  <td>
+                    <button onClick={() => handleDelete(lift.LiftTemplateId)}>Confirm</button>
+                    <button onClick={handleCancelDelete}>Cancel</button>
+                  </td>
+                </>
               ) : (
+                // Else show normal display for row
                 <>
                   <td>{lift.name}</td>
                   <td>{lift.sets}</td>
                   <td>{lift.reps}</td>
                   <td>{lift.weight}</td>
-                  <td>
+                  <td id="action-btns">
                     <button id="edit-btn" onClick={() => handleEdit(lift.LiftTemplateId, lift)}>Edit</button>
-                    <button type="button" id="delete-btn" onClick={() => handleDelete(lift.LiftTemplateId)}>Delete</button>
+                    <button type="button" id="delete-btn" onClick={() => handleDeleteClick(lift.LiftTemplateId)}>Delete</button>
                   </td>
                 </>
               )}
