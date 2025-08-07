@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/LiftList.css';
 
@@ -8,6 +8,10 @@ function LiftList({ lifts, fetchData }) {
   // Row values
   const [editedValues, setEditedValues] = useState({});
   const [deletingLiftId, setDeletingLiftId] = useState(null);
+
+  // For lift name select dropdown box
+  const [liftNames, setLiftNames] = useState([]);
+  const [selectedLift, setSelectedLift] = useState('');
 
   const endpoint = `${import.meta.env.VITE_API_URL}`;
 
@@ -19,7 +23,7 @@ function LiftList({ lifts, fetchData }) {
     // Map the liftId of the row clicked and set the edited values to each proper column
     setEditedValues({
       [liftId]: {
-        name: currentLiftData.name,
+        lift_name: currentLiftData.lift_name,
         sets: currentLiftData.sets,
         reps: currentLiftData.reps,
         weight: currentLiftData.weight
@@ -44,14 +48,17 @@ function LiftList({ lifts, fetchData }) {
     const updatedLift = {
       LiftTemplateId: liftId,
       ...editedValues[liftId],
+      lift_name: selectedLift,
       sets: Number(editedValues[liftId].sets),
       reps: Number(editedValues[liftId].reps),
       weight: Number(editedValues[liftId].weight),
     };
+    console.log(updatedLift);
     await axios.put(`${endpoint}/${liftId}`, updatedLift);
     fetchData(); // Refresh the data from backend
     setEditingLiftId(null);
     setEditedValues({});
+    setSelectedLift('');
   };
 
   // Cancel button functionality
@@ -76,6 +83,16 @@ function LiftList({ lifts, fetchData }) {
     setDeletingLiftId(null);
   };
 
+  // Fetch names from lookup table
+  useEffect(() => {
+    // Just put in the full URL instead of using the URL from env
+    axios.get("http://127.0.0.1:8000/liftnames")
+      .then(res => setLiftNames(res.data));
+  }, []);
+
+    liftNames.map(lift => (
+      console.log(lift.id, lift.name)
+    ))
 
   return (
     <div className="lifts">
@@ -99,11 +116,17 @@ function LiftList({ lifts, fetchData }) {
                 // If matches editingLiftId, show edit inputs for row
                 <>
                   <td>
-                    <input
-                      type="text"
-                      value={editedValues[lift.LiftTemplateId]?.name ?? lift.name}
-                      onChange={(e) => handleInputChange(e, 'name')}
-                    />
+                    <select
+                      value={selectedLift}
+                      // defaultValue={lift.lift_name}
+                      onChange={e => setSelectedLift(e.target.value)}
+                      required
+                    >
+                      <option value="">Select a lift</option>
+                      {liftNames.map(lift => (
+                        <option key={lift.id} value={lift.id}>{lift.name}</option>
+                      ))}
+                    </select>
                   </td>
                   <td>
                     <input

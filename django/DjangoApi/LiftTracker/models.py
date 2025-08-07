@@ -12,6 +12,7 @@ class LiftName(models.Model):
 class LiftTemplate(models.Model):
     LiftTemplateId = models.AutoField(primary_key=True)
     # Uses delete on cascade, will remove all instances of lift in LiftTemplate
+    # Is linking to automatically created id associated with name in LiftName
     lift_name = models.ForeignKey(LiftName, on_delete=models.CASCADE)  # Use ForeignKey
     sets = models.PositiveIntegerField(default=3)
     reps = models.PositiveIntegerField(default=10)
