@@ -3,8 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from LiftTracker.models import LiftTemplate
-from LiftTracker.serializers import LiftTemplateSerializer
+from LiftTracker.models import LiftName, LiftTemplate
+from LiftTracker.serializers import LiftNameSerializer, LiftTemplateSerializer
 
 # Create your views here.
 
@@ -12,20 +12,23 @@ from LiftTracker.serializers import LiftTemplateSerializer
 def liftTemplateApi(request, id=0):
     # Retrieving data
     if request.method=='GET':
-        liftTemplate = LiftTemplate.objects.all()
+        # Orders lifts table by LiftTemplateId
+        liftTemplate = liftTemplate = LiftTemplate.objects.all().order_by('LiftTemplateId')
         liftTemplate_serializer = LiftTemplateSerializer(liftTemplate, many=True)
 
         return JsonResponse(liftTemplate_serializer.data, safe=False)
     
     # Inserting data
-    elif request.method=='POST':
+    elif request.method == 'POST':
         liftTemplate_data = JSONParser().parse(request)
+        print("Received data:", liftTemplate_data)
         liftTemplate_serializer = LiftTemplateSerializer(data=liftTemplate_data)
 
         if liftTemplate_serializer.is_valid():
             liftTemplate_serializer.save()
-
             return JsonResponse("Added Successfully", safe=False)
+
+        print("Serializer errors:", liftTemplate_serializer.errors)
         return JsonResponse("Failed to Add", safe=False)
     
     # Updating existing data
@@ -47,3 +50,11 @@ def liftTemplateApi(request, id=0):
         liftTemplate.delete()
 
         return JsonResponse("Deleted Successfully", safe=False)
+
+    
+@csrf_exempt
+def liftNameApi(request):
+    if request.method == 'GET':
+        lift_names = LiftName.objects.all().order_by('name')
+        lift_names_serializer = LiftNameSerializer(lift_names, many=True)
+        return JsonResponse(lift_names_serializer.data, safe=False)

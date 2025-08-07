@@ -1,44 +1,61 @@
-.lift-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
-  gap: 1.2rem;
-  justify-items: center;
-  width: 100%;
-}
-
-.lift-card {
-  background: #004346;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  padding: 1.5rem 1.5rem;
-  min-width: 260px;
-  max-width: 340px;
-  min-height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 0.7rem;
+ table {
+  border-collapse: separate;
+  border-spacing: 10px; /* adds spacing between cells so border-radius shows */
+  margin: 5% auto;
+  background-color: #12151C;
   border: 2px solid #FFFFFF;
-  box-sizing: border-box;
-  word-break: break-word;
+  border-radius: 30px;
+  table-layout: fixed;
 }
 
-.lift-title {
-  font-size: 1.2rem;
-  font-weight: bold;
+th,
+td {
+  background-color: #12151c;
   color: #FFFFFF;
+  border: 1px solid #BEBEBE;
+  border-radius: 25px;
+  padding: 10px 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* optional: for visual depth */
 }
 
-.lift-desc {
-  color: #75DDDD;
-  font-size: 1.05rem;
+#action-btns {
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.lift-meta, .lift-dates {
-  font-size: 1rem;
-  color: #09BC8A;
-  display: flex;
-  gap: 1.2rem;
-  flex-wrap: wrap;
+#edit-btn {
+  padding: 14px 28px;
+  margin-right: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #12151C; 
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  color: white;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+#edit-btn:hover {
+  background-color: #131d31; 
+  border: 2px solid #FFFFFF;
+}
+
+#delete-btn {
+  padding: 14px 28px;
+  font-size: 16px;
+  background-color: #f44336;
+  color: white;
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+#delete-btn:hover {
+  background-color: #911c14;
+  border: 2px solid #FFFFFF;
 }

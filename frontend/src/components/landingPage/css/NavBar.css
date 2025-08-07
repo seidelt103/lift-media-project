@@ -1,46 +1,62 @@
-.three-col-navbar {
+.overall-nav {
+  width: 100%;
+  height: 11.5vh;
+  background-color: #12151C;
+  border-bottom: 0.5vh solid #FFFFFF;
+}
+
+.nav-wrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background: none;
+  justify-content: space-between;
+}
+
+.nav-title {
+  color: white;
+  font-size: 70px;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 64px;
+  margin-bottom: 60px;
+}
+
+.five-col-navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 64px;
+  gap: 44px;
 } 
 
+h1 {
+  color: #FFFFFF;
+}
+
 .nav-col {
-  flex: 1 1 0; /* All columns take equal width */
+   /* All columns take equal width */
   display: flex;
 }
-
-.left-col {
-  justify-content: flex-start;
-}
-
-.center-col {
-  justify-content: center;
-}
-
-.right-col {
-  justify-content: flex-end;
-}
-
 .nav-buttons {
-  background: #4caf50;
+  background-color: #12151c;
+  transition: background-color 0.3s ease-in-out;
   color: white;
-  border: 2px solid white;
-  width: 20rem;           /* Fixed width for all buttons */
-  height: 5rem;           /* Fixed height */
-  margin: 0 0.5rem;
+  /* border: 1px solid white; */
+  width: 100%;           /* Fixed width for all buttons */
+  height: 70px;           /* Fixed height */
+  padding: 10px;
   border-radius: 4px;
+  border: 1px solid#12151c;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 40px;
   display: inline-block;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0;
+  letter-spacing: -3%;
 }
 
 .nav-buttons:hover {
-  background: #388e3c;
+  background-color: #bebebe;
 }
