@@ -17,3 +17,23 @@ https://github.com/docker-library/docs/blob/master/postgres/README.md#database-c
 https://docs.docker.com/engine/containers/run/
 
 NOTE: this is all subject to change as the project is developed but is serving as a template for how the readme for the db should look
+
+
+When migrating models:
+
+1. Delete existing migrations in migrations folder except for _init_.py
+
+2. In pgAdmin4 the existing tables need to be dropped first using:
+-- DROP TABLE "LiftTracker_liftname","LiftTracker_lifttemplate"; 
+(drops liftname and lifttemplate tables from LiftTracker app)
+
+3. May need to also reset migration history (check if dropping the pre-existing tables does the job though first)
+Run the query in pgAdmin4:
+-- DELETE FROM django_migrations WHERE app = 'LiftTracker';
+(for the LiftTracker app)
+
+4. Then run in the terminal (after navigating to \django\DjangoApi):
+-- py manage.py makemigrations
+-- py manage.py migrate
+
+5. Then refresh the Tables in pgAdmin4 and they should appear

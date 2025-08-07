@@ -12,10 +12,6 @@ function WorkoutsPage() {
     setLiftData(response.data);
   };
 
-  const addLift = async (name, description) => {
-    await axios.post(endpoint, { name, description });
-    fetchData();
-  };
 
   useEffect(() => {
     fetchData();
@@ -24,7 +20,6 @@ function WorkoutsPage() {
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Workouts</h1>
-      <LiftForm onAddLift={addLift} />
       <LiftList lifts={liftData} />
     </div>
   );
