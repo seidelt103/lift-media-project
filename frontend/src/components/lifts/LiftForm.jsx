@@ -35,7 +35,7 @@ function LiftForm({ onAddLift }) {
       .then(res => setLiftNames(res.data));
   }, []);
 
-  // Fetch workout ids from lookup table
+  // Fetch workout ids from workout table (not a lookup table)
   useEffect(() => {
     // Just put in the full URL instead of using the URL from env
     axios.get("http://127.0.0.1:8000/workouts")

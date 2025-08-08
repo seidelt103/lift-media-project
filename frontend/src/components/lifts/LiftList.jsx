@@ -3,6 +3,7 @@ import axios from 'axios';
 import './css/LiftList.css';
 
 function LiftList({ lifts, fetchData }) {
+  
   // Row being edited, represented by overall lift
   const [editingLiftId, setEditingLiftId] = useState(null);
   // Row values
