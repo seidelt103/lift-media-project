@@ -3,8 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from LiftTracker.models import LiftName, LiftTemplate
-from LiftTracker.serializers import LiftNameSerializer, LiftTemplateSerializer
+from LiftTracker.models import LiftName, Workouts, LiftTemplate
+from LiftTracker.serializers import LiftNameSerializer, WorkoutSerializer, LiftTemplateSerializer
 
 # Create your views here.
 
@@ -58,3 +58,10 @@ def liftNameApi(request):
         lift_names = LiftName.objects.all().order_by('name')
         lift_names_serializer = LiftNameSerializer(lift_names, many=True)
         return JsonResponse(lift_names_serializer.data, safe=False)
+    
+@csrf_exempt
+def WorkoutsApi(request):
+    if request.method == 'GET':
+        workoutIDs = Workouts.objects.all().order_by('WorkoutId')
+        workoutIDs_serializer = WorkoutSerializer(workoutIDs, many=True)
+        return JsonResponse(workoutIDs_serializer.data, safe=False)

@@ -11,15 +11,20 @@ function LiftForm({ onAddLift }) {
   const [reps, setReps] = useState('');
   const [weight, setWeight] = useState('');
 
+  // For workout id select dropdown box
+  const [workoutIds, setWorkoutIds] = useState([]);
+  const [selectedWorkoutId, setSelectedWorkoutId] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (selectedLift && sets && reps && weight) {
-      console.log("Submitting lift:", selectedLift, sets, reps, weight);
-      onAddLift(selectedLift, sets, reps, weight);
+    if (selectedLift && sets && reps && weight && selectedWorkoutId) {
+      console.log("Submitting lift:", selectedLift, sets, reps, weight, selectedWorkoutId);
+      onAddLift(selectedLift, sets, reps, weight, selectedWorkoutId);
       setSelectedLift('');
       setSets('');
       setReps('');
       setWeight('');
+      setSelectedWorkoutId('');
     }
   };
 
@@ -28,6 +33,13 @@ function LiftForm({ onAddLift }) {
     // Just put in the full URL instead of using the URL from env
     axios.get("http://127.0.0.1:8000/liftnames")
       .then(res => setLiftNames(res.data));
+  }, []);
+
+  // Fetch workout ids from lookup table
+  useEffect(() => {
+    // Just put in the full URL instead of using the URL from env
+    axios.get("http://127.0.0.1:8000/workouts")
+      .then(res => setWorkoutIds(res.data));
   }, []);
 
   return (
@@ -60,6 +72,16 @@ function LiftForm({ onAddLift }) {
         onChange={e => setWeight(e.target.value)}
         placeholder="Weight"
       />
+      <select
+        value={selectedWorkoutId}
+        onChange={e => setSelectedWorkoutId(e.target.value)}
+        required
+      >
+        <option value="">Select a workout</option>
+        {workoutIds.map(workout => (
+          <option key={workout.WorkoutId} value={workout.WorkoutId}>{workout.WorkoutId}</option>
+        ))}
+      </select>
       <button className="lift-submit" type="submit">Enter lift</button>
     </form>
   );

@@ -7,14 +7,14 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
   align-items: center;   /* vertically center inputs */
   margin: 1.5rem auto 2rem auto;
-  width: 900px;           /* auto width so it can grow horizontally */
+  width: 1400px;           /* auto width so it can grow horizontally */
   max-width: 100%;       /* prevent overflow */
   justify-content: center;
   flex-wrap: wrap;       /* wrap to next line if too narrow */
 }
 
 select {
-  width: 150px;
+  width: 185px;
   padding: 10px 20px;
   border: 2px solid #BEBEBE;
   border-radius: 25px;
@@ -43,11 +43,11 @@ select {
 }
 
 .lift-submit {
-  width: 120px;        
+  width: 150px;        
   padding: 10px 20px; /* smaller padding */
   border: 2px solid #BEBEBE;
   border-radius: 25px;
-  font-size: 16pxrem;
+  font-size: 0.9rem;
   font-weight: bold;
   background-color: #1B222C;
   color: #FFFFFF;
