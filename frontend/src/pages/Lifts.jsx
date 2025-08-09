@@ -12,15 +12,16 @@ function LiftsPage() {
     setLiftData(response.data);
   };
 
-  const addLift = async (lift_id, sets, reps, weight) => {
+  const addLift = async (lift_id, sets, reps, weight, workoutId) => {
     try {
-      console.log('Adding lift:', { lift_id, sets, reps, weight });
+      console.log('Adding lift:', { lift_id, sets, reps, weight, workoutId });
       
       const liftData = {
         lift_name: lift_id, 
         sets: parseInt(sets),
         reps: parseInt(reps),
-        weight: parseFloat(weight)
+        weight: parseFloat(weight),
+        fk_workout: parseInt(workoutId)
       };
       
       const response = await axios.post(`${baseUrl}`, liftData); 

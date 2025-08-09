@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import LiftList from '../components/lifts/LiftList';
 import LiftForm from '../components/lifts/LiftForm';
+import WorkoutCards from '../components/lifts/WorkoutCards';
 
 function WorkoutsPage() {
   const [liftData, setLiftData] = useState([]);
@@ -12,10 +13,6 @@ function WorkoutsPage() {
     setLiftData(response.data);
   };
 
-  const addLift = async (name, description) => {
-    await axios.post(endpoint, { name, description });
-    fetchData();
-  };
 
   useEffect(() => {
     fetchData();
@@ -23,9 +20,9 @@ function WorkoutsPage() {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }}>Workouts</h1>
-      <LiftForm onAddLift={addLift} />
-      <LiftList lifts={liftData} />
+      <h1 style={{ textAlign: 'center', fontSize: '70px', margin: '6rem auto 5rem auto', paddingBottom: '1.5rem', borderBottom: '3px solid #FFFFFF', width: '90%'}}>Workout Log</h1>
+      {/* Pass in all lift data */}
+      <WorkoutCards lifts={liftData} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import './css/LiftList.css';
 
 function LiftList({ lifts, fetchData }) {
+  
   // Row being edited, represented by overall lift
   const [editingLiftId, setEditingLiftId] = useState(null);
   // Row values
@@ -26,7 +27,12 @@ function LiftList({ lifts, fetchData }) {
         lift_name: currentLiftData.lift_name,
         sets: currentLiftData.sets,
         reps: currentLiftData.reps,
-        weight: currentLiftData.weight
+        weight: currentLiftData.weight,
+        /* Include this since JSON format requires it, but don't allow option to change it
+        Maybe implement option to change it later on edit but ideally they will be all in their same
+        workout cards/components so user won't need to edit the id, the way it's implemented now is
+        just as an initial way to associate lifts with individual workouts */
+        fk_workout: currentLiftData.fk_workout
       }
     });
   };
@@ -52,6 +58,8 @@ function LiftList({ lifts, fetchData }) {
       sets: Number(editedValues[liftId].sets),
       reps: Number(editedValues[liftId].reps),
       weight: Number(editedValues[liftId].weight),
+      // Must be included, but have no option to change it on edit
+      fk_workout: Number(editedValues[liftId].fk_workout)
     };
     console.log(updatedLift);
     await axios.put(`${endpoint}/${liftId}`, updatedLift);
