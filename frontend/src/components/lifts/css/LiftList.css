@@ -3,8 +3,8 @@
   border-spacing: 10px; /* adds spacing between cells so border-radius shows */
   margin: 5% auto;
   background-color: #12151C;
-  border: 2px solid #FFFFFF;
   border-radius: 30px;
+  border: none;
   table-layout: fixed;
 }
 

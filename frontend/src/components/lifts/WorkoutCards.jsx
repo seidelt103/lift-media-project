@@ -6,12 +6,22 @@ function WorkoutCards({ lifts }) {
   // Get unique workout IDs
   const workoutIds = [...new Set(lifts.map(lift => lift.fk_workout))];
 
+  // Workout table details
+  const [workouts, setWorkouts] = useState([]);
+
+  // Fetch workout table details
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/workouts")
+      .then(res => setWorkouts(res.data));
+  }, []);
+
   return (
     <div className="cards">
       {workoutIds.map(workoutId => (
-        <div key={workoutId}>
+        <div className="overall-card" key={workoutId}>
+          {/* Find date within workouts object based on id */}
+          <h1 className="date-header">{workouts.find(w => w.WorkoutId === workoutId)?.date}</h1>
           <table border="1">
-            <caption>Workout {workoutId}</caption>
             <thead>
               <tr>
                 <th>Name</th>
