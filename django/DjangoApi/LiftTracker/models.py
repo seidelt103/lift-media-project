@@ -2,11 +2,26 @@ from django.db import models
 
 # Create your models here.
 
+class LiftName(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    # Shows actual lift name for readability
+    def __str__(self):
+        return self.name
+    
+class Workouts(models.Model):
+    WorkoutId = models.AutoField(primary_key=True)
+    date = models.DateField()
+    
+
 class LiftTemplate(models.Model):
     LiftTemplateId = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    # Uses delete on cascade, will remove all instances of lift in LiftTemplate
+    # Is linking to automatically created id associated with name in LiftName
+    lift_name = models.ForeignKey(LiftName, on_delete=models.CASCADE)  
     sets = models.PositiveIntegerField(default=3)
     reps = models.PositiveIntegerField(default=10)
+    weight = models.PositiveIntegerField(default=100)
+    # Required delete on cascade for migration, required default
+    fk_workout = models.ForeignKey(Workouts, on_delete=models.CASCADE)
+

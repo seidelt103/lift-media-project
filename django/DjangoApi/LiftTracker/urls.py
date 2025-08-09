@@ -9,4 +9,6 @@ urlpatterns = [
     re_path(r'liftTemplate$', views.liftTemplateApi),
     # Gets id for delete (and maybe update too), acts on a singlet item by ID
     re_path(r'^liftTemplate/([0-9]+)$', views.liftTemplateApi),
+    re_path(r'^liftnames$', views.liftNameApi),
+    re_path(r'^workouts$', views.WorkoutsApi),
 ]

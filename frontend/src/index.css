@@ -1,63 +1,10 @@
 /* NOT RESPONSIVE YET, MAY ONLY WORK RIGHT ON CERTAIN RESOLUTIONS */
 
 body {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #508991;
-}
-
-
-.header {
-  margin-top: 30px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 90%;
-  height: 150px;
-  border: 2px solid #FFFFFF;
-  border-radius: 10px;
-}
-
-.mycontainer {
-  width:90%;
-  margin-left: auto;
-  margin-right: auto;
-  overflow:auto;
-  display: flex;
-  margin-top: 100px;
-  /* Ensures the container takes up the full viewport height */
-  height: 60vh; 
-  gap: 100px;
-  
-}
-.mycontainer div {
-  width:33%;
-  height: 99%;
-  text-align: center; 
-  border: 4px solid #FFFFFF;
-  background-color: #004346;
-  border-radius: 10px;
-}
-
-.nav-buttons {
-  /* Positions button at bottom of container */
-  height: 100px;
-  width: 100%;
-  border: 4px solid #FFFFFF;
-  border-radius: 10px;
-
-  /* Adjust this for moving button to bottom of container properly */
-  margin-top: 251px;
-
-  margin-left: auto;
-  font-size: 25px;
-  font-weight: bold;
-  color: #FFFFFF;
-  background-color: #09BC8A;
-}
-
-h1 {
-  margin: 40px auto;
-  font-size: 45px;
-  color: #FFFFFF;
+  font-family: system-ui, Arial, Avenir, Helvetica, sans-serif;
+  background-color: #1B222C;
+  /* Used to remove default space between Navbar and outer edge of screen */
+  margin: 0;
 }
 
 p {
