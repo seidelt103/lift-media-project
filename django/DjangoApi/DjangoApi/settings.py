@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k8ij#rjir7q%8vsxt)(nhqr*0nv1dlb278(!x(%2&y31f#+m4_'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+ 
+DEBUG = bool(os.environ.get("DEBUG", default=0))
+ 
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
 
 
 # Application definition
@@ -43,8 +43,12 @@ INSTALLED_APPS = [
 ]
 
 # CORS settings
-# Allow all origins for development purposes, remove in production
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+CORS_ALLOW_CREDENTIALS = True  # Only needed if you use cookies/auth
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -80,16 +84,20 @@ WSGI_APPLICATION = 'DjangoApi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Use environment variables for database configuration
+# os.getenv param 1 is the env variable name, param 2 is the default value if the env variable is not set
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lift-media',
-        'USER': 'myuser',
-        'PASSWORD': 'mysecretpassword',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
+     'default': {
+         'ENGINE': 'django.db.backends.{}'.format(
+             os.getenv('DATABASE_ENGINE', 'sqlite3')
+         ),
+         'NAME': os.getenv('DATABASE_NAME', 'polls'),
+         'USER': os.getenv('DATABASE_USERNAME', 'myprojectuser'),
+         'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
+         'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),
+         'PORT': os.getenv('DATABASE_PORT', 5432),
+     }
+ }
 
 
 # Password validation
