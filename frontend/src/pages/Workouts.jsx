@@ -13,7 +13,6 @@ function WorkoutsPage() {
     setLiftData(response.data);
   };
 
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -22,7 +21,7 @@ function WorkoutsPage() {
     <div>
       <h1 style={{ textAlign: 'center', fontSize: '70px', margin: '6rem auto 5rem auto', paddingBottom: '1.5rem', borderBottom: '3px solid #FFFFFF', width: '90%'}}>Workout Log</h1>
       {/* Pass in all lift data */}
-      <WorkoutCards lifts={liftData} />
+      <WorkoutCards lifts={liftData} fetchData={fetchData}/>
     </div>
   );
 }

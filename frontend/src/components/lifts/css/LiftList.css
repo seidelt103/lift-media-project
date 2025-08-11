@@ -8,6 +8,14 @@
   table-layout: fixed;
 }
 
+/* Need to explicitly set lift table to have border,
+set it to none so workout tables could match card design but
+did want border around lift input table for styling (doesn't matter
+that much) */
+.lift-table {
+  border: 2px solid #FFFFFF;
+}
+
 th,
 td {
   background-color: #12151c;

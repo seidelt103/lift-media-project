@@ -98,13 +98,9 @@ function LiftList({ lifts, fetchData }) {
       .then(res => setLiftNames(res.data));
   }, []);
 
-    liftNames.map(lift => (
-      console.log(lift.id, lift.name)
-    ))
-
   return (
     <div className="lifts">
-      <table>
+      <table className="lift-table">
         <thead>
           <tr>
             {/* Hard coded for now, will need to pull headers from db later */}

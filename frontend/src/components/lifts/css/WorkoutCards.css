@@ -27,3 +27,26 @@ caption {
   border-bottom: 1px solid #FFFFFF;
   width: 90%;
 }
+
+#card-edit-btn {
+  padding: 14px 28px;
+  margin-right: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #12151C; 
+  border: 2px solid #BEBEBE;
+  border-radius: 25px;
+  color: white;
+  transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+#card-edit-btn:hover {
+  background-color: #131d31; 
+  border: 2px solid #FFFFFF;
+}
+
+/* Hides empty action button cells so empty circle clolumn doesn't appear when
+workout card isn't being edited */
+td:empty {
+  display: none;
+}
