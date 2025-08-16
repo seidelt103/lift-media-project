@@ -23,6 +23,8 @@ function WorkoutCards({ lifts, fetchData }) {
   const [liftNames, setLiftNames] = useState([]);
   const [selectedLift, setSelectedLift] = useState('');
 
+  const [deletingLiftId, setDeletingLiftId] = useState(null);
+
   /* Fetch workout table details, must be in this format so fetchData can be passed 
   in, if put in other form then fetchData cannot be passed in since it is called already, 
   no refresh will be applied */
@@ -95,6 +97,22 @@ function WorkoutCards({ lifts, fetchData }) {
     setEditedValues({});
   };
 
+  const handleDelete = async (liftId) => {
+    await axios.delete(`${endpoint}/${liftId}`);
+    // Refresh data
+    fetchData();
+  };
+
+  // Delete confirmed
+  const handleDeleteClick = (liftId) => {
+    setDeletingLiftId(liftId);
+  };
+
+  // Delete cancelled
+  const handleCancelDelete = () => {
+    setDeletingLiftId(null);
+  };
+
   return (
     <div className="cards">
       {/* Each Workout Id maps to a different workout */}
@@ -161,22 +179,32 @@ function WorkoutCards({ lifts, fetchData }) {
                           <button onClick={handleCancelClick}>Cancel</button>
                         </td>
                       </>
-                    ) : (
-                      // Normal display with conditional edit button
+                    ) : deletingLiftId === lift.LiftTemplateId ? (
+                      // Else if matches deleteLiftId, show delete confirmation
                       <>
-                        <td>{lift.name}</td>
-                        <td>{lift.sets}</td>
-                        <td>{lift.reps}</td>
-                        <td>{lift.weight}</td>
+                        <td colSpan={4}>Are you sure you want to delete lift?</td>
                         <td>
-                          {/* Only shows when current workout card is in edit mode */}
-                          {editingWorkoutId === workoutId && (
-                            <button onClick={() => handleEdit(lift.LiftTemplateId, lift)}>
-                              Edit
-                            </button>
-                          )}
+                          <button onClick={() => handleDelete(lift.LiftTemplateId)}>Confirm</button>
+                          <button onClick={handleCancelDelete}>Cancel</button>
                         </td>
                       </>
+                    ) : (
+                    // Normal display with conditional edit button
+                    <>
+                      <td>{lift.name}</td>
+                      <td>{lift.sets}</td>
+                      <td>{lift.reps}</td>
+                      <td>{lift.weight}</td>
+                      <td id="action-btns">
+                        {/* Only shows when current workout card is in edit mode */}
+                        {editingWorkoutId === workoutId && (
+                          <button id="edit-btn" onClick={() => handleEdit(lift.LiftTemplateId, lift)}>Edit</button>
+                        )}
+                        {editingWorkoutId === workoutId && (
+                          <button type="button" id="delete-btn" onClick={() => handleDeleteClick(lift.LiftTemplateId)}>Delete</button>
+                        )}
+                      </td>
+                    </>
                     )}
                   </tr>
                 ))}

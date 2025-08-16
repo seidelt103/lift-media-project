@@ -75,16 +75,18 @@ function LiftList({ lifts, fetchData }) {
     setEditedValues({});
   };
 
+  // Delete is clicked
+  const handleDeleteClick = (liftId) => {
+    setDeletingLiftId(liftId);
+  };
+
+  // Functionality for when delete is confirmed
   const handleDelete = async (liftId) => {
     await axios.delete(`${endpoint}/${liftId}`);
     // Refresh data
     fetchData();
   };
 
-  // Delete confirmed
-  const handleDeleteClick = (liftId) => {
-    setDeletingLiftId(liftId);
-  };
 
   // Delete cancelled
   const handleCancelDelete = () => {
