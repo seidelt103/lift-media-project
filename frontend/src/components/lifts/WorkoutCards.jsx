@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/WorkoutCards.css';
 import WorkoutDate from './WorkoutDate';
+import AddLift from './AddLift';
 
 function WorkoutCards({ lifts, fetchData }) {
 
@@ -29,6 +30,10 @@ function WorkoutCards({ lifts, fetchData }) {
   /* State for temporary date change when date is edited (will include simultaneous
   edits, need to make it so only one workout card can be edited at a time) */
   const [tempWorkoutDates, setTempWorkoutDates] = useState({});
+
+  // Add row state
+  const [newRowData, setNewRowData] = useState({});
+  const [showingAddRow, setShowingAddRow] = useState({});
 
   /* Fetch workout table details, must be in this format so fetchData can be passed 
   in, if put in other form then fetchData cannot be passed in since it is called already, 
@@ -158,6 +163,83 @@ function WorkoutCards({ lifts, fetchData }) {
     setEditingWorkoutId(null);
   };
 
+  // Add row functions
+  const handleShowAddRow = (workoutId) => {
+    setShowingAddRow(prev => ({
+      ...prev,
+      [workoutId]: true
+    }));
+    
+    setNewRowData(prev => ({
+      ...prev,
+      [workoutId]: {
+        exercise: '',
+        sets: '',
+        reps: '',
+        weight: '',
+      }
+    }));
+  };
+
+  const handleNewRowChange = (workoutId, field, value) => {
+    setNewRowData(prev => ({
+      ...prev,
+      [workoutId]: {
+        ...prev[workoutId],
+        [field]: value
+      }
+    }));
+  };
+
+  const handleSaveNewRow = async (workoutId) => {
+    const rowData = newRowData[workoutId];
+    
+    if (!rowData || !rowData.exercise) {
+      alert('Please fill in at least the exercise name');
+      return;
+    }
+
+    try {
+
+      const addedLift = {
+        lift_name: Number(rowData.exercise),
+        sets: Number(rowData.sets) || 0,
+        reps: Number(rowData.reps) || 0,
+        weight: Number(rowData.weight) || 0,
+        fk_workout: Number(workoutId),
+      };
+
+    await axios.post(`${endpoint}`, addedLift);
+
+    // Refresh the data from backend so newly added lift appears instantly
+    fetchData();
+
+    // Used here as a reset to clear and hide the add lift row once lift is submitted
+    handleCancelAddRow(workoutId);
+      
+    } catch (error) {
+      console.error('Error adding new exercise:', error);
+      alert('Failed to add exercise. Please try again.');
+    }
+  };
+
+  const handleCancelAddRow = (workoutId) => {
+
+    // Hides the added lift row
+    setShowingAddRow(prev => {
+      const newState = { ...prev };
+      delete newState[workoutId];
+      return newState;
+    });
+    
+    // Clears the form data
+    setNewRowData(prev => {
+      const newState = { ...prev };
+      delete newState[workoutId];
+      return newState;
+    });
+  };
+
   return (
     <div className="cards">
 
@@ -259,21 +341,36 @@ function WorkoutCards({ lifts, fetchData }) {
                     )}
                   </tr>
                 ))}
+                {/* AddRow component */}
+              {showingAddRow[workoutId] && (
+                <AddLift
+                  workoutId={workoutId}
+                  onSave={handleSaveNewRow}
+                  onCancel={handleCancelAddRow}
+                  onChange={handleNewRowChange}
+                  data={newRowData[workoutId]}
+                  liftNames={liftNames}
+                />
+              )}
             </tbody>
           </table>
           {/* Workout card edit button */}
           {editingWorkoutId === workoutId ? (
-            <button
-              id="card-done-btn"
-              onClick={() => handleWorkoutDone(workoutId)}
-            >
+          <>
+            <div class="add-lift">
+            <button id="card-done-btn" onClick={() => handleShowAddRow(workoutId)}>
+              Add Lift
+            </button>
+            </div>
+
+            <div class="done-btn">
+            <button id="card-done-btn" onClick={() => handleWorkoutDone(workoutId)}>
               Done
             </button>
+            </div>
+          </>
           ) : (
-            <button
-              id="card-edit-btn"
-              onClick={() => setEditingWorkoutId(workoutId)}
-            >
+            <button id="card-edit-btn" onClick={() => setEditingWorkoutId(workoutId)}>
               Edit
             </button>
           )}
