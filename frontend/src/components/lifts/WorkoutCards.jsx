@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/WorkoutCards.css';
+import WorkoutDate from './WorkoutDate';
 
 function WorkoutCards({ lifts, fetchData }) {
 
@@ -24,6 +25,10 @@ function WorkoutCards({ lifts, fetchData }) {
   const [selectedLift, setSelectedLift] = useState('');
 
   const [deletingLiftId, setDeletingLiftId] = useState(null);
+
+  /* State for temporary date change when date is edited (will include simultaneous
+  edits, need to make it so only one workout card can be edited at a time) */
+  const [tempWorkoutDates, setTempWorkoutDates] = useState({});
 
   /* Fetch workout table details, must be in this format so fetchData can be passed 
   in, if put in other form then fetchData cannot be passed in since it is called already, 
@@ -113,13 +118,59 @@ function WorkoutCards({ lifts, fetchData }) {
     setDeletingLiftId(null);
   };
 
+  // Function to handle date changes from WorkoutDate component
+  const handleWorkoutDateChange = (workoutId, newDate) => {
+    /* Will set the associated workout in tempWorkoutDates to new input date,
+    keeps all the other previous data unchanged */
+    setTempWorkoutDates(prev => ({
+      ...prev,
+      [workoutId]: newDate
+    }));
+  };
+
+  // Function to save the workout when Done is clicked
+  const handleWorkoutDone = async (workoutId) => {
+    const tempDate = tempWorkoutDates[workoutId];
+
+    // Update Workouts table with new date
+    if (tempDate) {
+      await axios.put(`http://127.0.0.1:8000/workouts`, {
+        WorkoutId: workoutId,
+        date: tempDate.toISOString().split('T')[0]
+      });
+
+      // Update only the associated edited workout's date in workout table state
+      setWorkouts(prev => prev.map(workout =>
+        workout.WorkoutId === workoutId
+          ? { ...workout, date: tempDate }
+          : workout
+      ));
+
+      // Clear the temporary date for the associated edited workout date
+      setTempWorkoutDates(prev => {
+        const newTemp = { ...prev };
+        delete newTemp[workoutId];
+        return newTemp;
+      });
+    }
+
+    // Reset editing workout state
+    setEditingWorkoutId(null);
+  };
+
   return (
     <div className="cards">
+
+      {/* Put add workout card here, should fit within display grid CSS */}
+
       {/* Each Workout Id maps to a different workout */}
       {workoutIds.map(workoutId => (
         <div className="overall-card" key={workoutId}>
-          {/* Find date within workouts object based on id */}
-          <h1 className="date-header">{workouts.find(w => w.WorkoutId === workoutId)?.date}</h1>
+          <WorkoutDate
+            date={workouts.find(w => w.WorkoutId === workoutId)?.date}
+            isEditing={editingWorkoutId === workoutId}
+            onDateChange={(newDate) => handleWorkoutDateChange(workoutId, newDate)}
+          />
           <table border="1">
             <thead>
               <tr>
@@ -189,22 +240,22 @@ function WorkoutCards({ lifts, fetchData }) {
                         </td>
                       </>
                     ) : (
-                    // Normal display with conditional edit button
-                    <>
-                      <td>{lift.name}</td>
-                      <td>{lift.sets}</td>
-                      <td>{lift.reps}</td>
-                      <td>{lift.weight}</td>
-                      <td id="action-btns">
-                        {/* Only shows when current workout card is in edit mode */}
-                        {editingWorkoutId === workoutId && (
-                          <button id="edit-btn" onClick={() => handleEdit(lift.LiftTemplateId, lift)}>Edit</button>
-                        )}
-                        {editingWorkoutId === workoutId && (
-                          <button type="button" id="delete-btn" onClick={() => handleDeleteClick(lift.LiftTemplateId)}>Delete</button>
-                        )}
-                      </td>
-                    </>
+                      // Normal display with conditional edit button
+                      <>
+                        <td>{lift.name}</td>
+                        <td>{lift.sets}</td>
+                        <td>{lift.reps}</td>
+                        <td>{lift.weight}</td>
+                        <td id="action-btns">
+                          {/* Only shows when current workout card is in edit mode */}
+                          {editingWorkoutId === workoutId && (
+                            <button id="edit-btn" onClick={() => handleEdit(lift.LiftTemplateId, lift)}>Edit</button>
+                          )}
+                          {editingWorkoutId === workoutId && (
+                            <button type="button" id="delete-btn" onClick={() => handleDeleteClick(lift.LiftTemplateId)}>Delete</button>
+                          )}
+                        </td>
+                      </>
                     )}
                   </tr>
                 ))}
@@ -214,7 +265,7 @@ function WorkoutCards({ lifts, fetchData }) {
           {editingWorkoutId === workoutId ? (
             <button
               id="card-done-btn"
-              onClick={() => setEditingWorkoutId(null)}
+              onClick={() => handleWorkoutDone(workoutId)}
             >
               Done
             </button>

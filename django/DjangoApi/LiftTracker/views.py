@@ -65,3 +65,15 @@ def WorkoutsApi(request):
         workoutIDs = Workouts.objects.all().order_by('WorkoutId')
         workoutIDs_serializer = WorkoutSerializer(workoutIDs, many=True)
         return JsonResponse(workoutIDs_serializer.data, safe=False)
+    
+    # Updating existing data
+    elif request.method=='PUT':
+        workouts_data=JSONParser().parse(request)
+        # Attempting to get PK id from Workouts table
+        workouts = Workouts.objects.get(WorkoutId = workouts_data['WorkoutId'])
+        workouts_serializer = WorkoutSerializer(workouts, data = workouts_data)
+
+        if workouts_serializer.is_valid():
+            workouts_serializer.save()
+            return JsonResponse("Updated Successfully", safe=False)
+        return JsonResponse("Failed to Update")
