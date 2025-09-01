@@ -27,6 +27,8 @@ function WorkoutCards({ lifts, fetchData }) {
 
   const [deletingLiftId, setDeletingLiftId] = useState(null);
 
+  const [deletingWorkoutId, setDeletingWorkoutId] = useState(null);
+
   /* State for temporary date change when date is edited (will include simultaneous
   edits, need to make it so only one workout card can be edited at a time) */
   const [tempWorkoutDates, setTempWorkoutDates] = useState({});
@@ -169,7 +171,7 @@ function WorkoutCards({ lifts, fetchData }) {
       ...prev,
       [workoutId]: true
     }));
-    
+
     setNewRowData(prev => ({
       ...prev,
       [workoutId]: {
@@ -193,7 +195,7 @@ function WorkoutCards({ lifts, fetchData }) {
 
   const handleSaveNewRow = async (workoutId) => {
     const rowData = newRowData[workoutId];
-    
+
     if (!rowData || !rowData.exercise) {
       alert('Please fill in at least the exercise name');
       return;
@@ -209,14 +211,14 @@ function WorkoutCards({ lifts, fetchData }) {
         fk_workout: Number(workoutId),
       };
 
-    await axios.post(`${endpoint}`, addedLift);
+      await axios.post(`${endpoint}`, addedLift);
 
-    // Refresh the data from backend so newly added lift appears instantly
-    fetchData();
+      // Refresh the data from backend so newly added lift appears instantly
+      fetchData();
 
-    // Used here as a reset to clear and hide the add lift row once lift is submitted
-    handleCancelAddRow(workoutId);
-      
+      // Used here as a reset to clear and hide the add lift row once lift is submitted
+      handleCancelAddRow(workoutId);
+
     } catch (error) {
       console.error('Error adding new exercise:', error);
       alert('Failed to add exercise. Please try again.');
@@ -231,13 +233,25 @@ function WorkoutCards({ lifts, fetchData }) {
       delete newState[workoutId];
       return newState;
     });
-    
+
     // Clears the form data
     setNewRowData(prev => {
       const newState = { ...prev };
       delete newState[workoutId];
       return newState;
     });
+  };
+
+  const handleWorkoutDelete = async (workoutId) => {
+    await axios.delete(`http://127.0.0.1:8000/workouts/${workoutId}/`);
+    // Refresh data
+    fetchData();
+  }
+
+  const handleWorkoutDeleteClick = (workoutId) => {
+    if (window.confirm("Do you want to delete this workout?")) {
+      handleWorkoutDelete(workoutId);
+    }
   };
 
   return (
@@ -341,7 +355,7 @@ function WorkoutCards({ lifts, fetchData }) {
                     )}
                   </tr>
                 ))}
-                {/* AddRow component */}
+              {/* AddRow component */}
               {showingAddRow[workoutId] && (
                 <AddLift
                   workoutId={workoutId}
@@ -356,23 +370,28 @@ function WorkoutCards({ lifts, fetchData }) {
           </table>
           {/* Workout card edit button */}
           {editingWorkoutId === workoutId ? (
-          <>
-            <div class="add-lift">
-            <button id="card-done-btn" onClick={() => handleShowAddRow(workoutId)}>
-              Add Lift
-            </button>
-            </div>
+            <>
+              <div class="add-lift">
+                <button id="card-done-btn" onClick={() => handleShowAddRow(workoutId)}>
+                  Add Lift
+                </button>
+              </div>
 
-            <div class="done-btn">
-            <button id="card-done-btn" onClick={() => handleWorkoutDone(workoutId)}>
-              Done
-            </button>
-            </div>
-          </>
+              <div class="done-btn">
+                <button id="card-done-btn" onClick={() => handleWorkoutDone(workoutId)}>
+                  Done
+                </button>
+              </div>
+            </>
           ) : (
-            <button id="card-edit-btn" onClick={() => setEditingWorkoutId(workoutId)}>
-              Edit
-            </button>
+            <>
+              <button id="card-edit-btn" onClick={() => setEditingWorkoutId(workoutId)}>
+                Edit
+              </button>
+              <button id="card-delete-btn" onClick={() => handleWorkoutDeleteClick(workoutId)}>
+                Delete
+              </button>
+            </>
           )}
         </div>
       ))

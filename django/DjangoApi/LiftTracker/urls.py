@@ -11,4 +11,5 @@ urlpatterns = [
     re_path(r'^liftTemplate/([0-9]+)$', views.liftTemplateApi),
     re_path(r'^liftnames$', views.liftNameApi),
     re_path(r'^workouts$', views.WorkoutsApi),
+    re_path(r'^workouts/([0-9]+)/$', views.WorkoutsApi), 
 ]

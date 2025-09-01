@@ -60,11 +60,22 @@ def liftNameApi(request):
         return JsonResponse(lift_names_serializer.data, safe=False)
     
 @csrf_exempt
-def WorkoutsApi(request):
+def WorkoutsApi(request, workout_id=None):
+    # Currently gets all workouts, not specific ones, implement workout_id to do that
     if request.method == 'GET':
-        workoutIDs = Workouts.objects.all().order_by('WorkoutId')
-        workoutIDs_serializer = WorkoutSerializer(workoutIDs, many=True)
-        return JsonResponse(workoutIDs_serializer.data, safe=False)
+        if workout_id:
+            # Get specific workout
+            try:
+                workout = Workouts.objects.get(WorkoutId=workout_id)
+                workout_serializer = WorkoutSerializer(workout)
+                return JsonResponse(workout_serializer.data, safe=False)
+            except Workouts.DoesNotExist:
+                return JsonResponse({'error': 'Workout not found'}, status=404)
+        else:
+            # Get all workouts (when no workout_id provided)
+            workoutIDs = Workouts.objects.all().order_by('WorkoutId')
+            workoutIDs_serializer = WorkoutSerializer(workoutIDs, many=True)
+            return JsonResponse(workoutIDs_serializer.data, safe=False)
     
     # Updating existing data
     elif request.method=='PUT':
@@ -77,3 +88,10 @@ def WorkoutsApi(request):
             workouts_serializer.save()
             return JsonResponse("Updated Successfully", safe=False)
         return JsonResponse("Failed to Update")
+    
+    elif request.method=='DELETE':
+        # References id passed into this overall function
+        workout = Workouts.objects.get(WorkoutId=workout_id)
+        workout.delete()
+
+        return JsonResponse("Deleted Successfully", safe=False)
