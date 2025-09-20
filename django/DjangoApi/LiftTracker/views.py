@@ -76,6 +76,19 @@ def WorkoutsApi(request, workout_id=None):
             workoutIDs = Workouts.objects.all().order_by('WorkoutId')
             workoutIDs_serializer = WorkoutSerializer(workoutIDs, many=True)
             return JsonResponse(workoutIDs_serializer.data, safe=False)
+        
+    # Inserting data
+    elif request.method == 'POST':
+        workouts_data = JSONParser().parse(request)
+        print("Received data:", workouts_data)
+        workouts_serializer = WorkoutSerializer(data=workouts_data)
+
+        if workouts_serializer.is_valid():
+            workouts_serializer.save()
+            return JsonResponse("Added Successfully", safe=False)
+
+        print("Serializer errors:", workouts_serializer.errors)
+        return JsonResponse("Failed to Add", safe=False)
     
     # Updating existing data
     elif request.method=='PUT':

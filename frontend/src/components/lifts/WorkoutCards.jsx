@@ -3,6 +3,7 @@ import axios from 'axios';
 import './css/WorkoutCards.css';
 import WorkoutDate from './WorkoutDate';
 import AddLift from './AddLift';
+import AddWorkout from './AddWorkout'; 
 
 function WorkoutCards({ lifts, fetchData }) {
 
@@ -36,6 +37,9 @@ function WorkoutCards({ lifts, fetchData }) {
   // Add row state
   const [newRowData, setNewRowData] = useState({});
   const [showingAddRow, setShowingAddRow] = useState({});
+
+  // State for showing/hiding AddWorkout component
+  const [showingAddWorkout, setShowingAddWorkout] = useState(false);
 
   /* Fetch workout table details, must be in this format so fetchData can be passed 
   in, if put in other form then fetchData cannot be passed in since it is called already, 
@@ -254,10 +258,35 @@ function WorkoutCards({ lifts, fetchData }) {
     }
   };
 
+  // Functions for AddWorkout component
+  const handleShowAddWorkout = () => {
+    setShowingAddWorkout(true);
+  };
+
+  const handleCancelAddWorkout = () => {
+    setShowingAddWorkout(false);
+  };
+
   return (
     <div className="cards">
 
       {/* Put add workout card here, should fit within display grid CSS */}
+      {showingAddWorkout ? (
+        <AddWorkout 
+          fetchData={fetchData} 
+          onCancel={handleCancelAddWorkout}
+        />
+      ) : (
+        <div className="overall-card">
+          <button 
+            id="card-edit-btn" 
+            onClick={handleShowAddWorkout}
+            className="add-workout-btn"
+          >
+           Add New Workout
+          </button>
+        </div>
+      )}
 
       {/* Each Workout Id maps to a different workout */}
       {workoutIds.map(workoutId => (
@@ -371,13 +400,13 @@ function WorkoutCards({ lifts, fetchData }) {
           {/* Workout card edit button */}
           {editingWorkoutId === workoutId ? (
             <>
-              <div class="add-lift">
+              <div className="add-lift">
                 <button id="card-done-btn" onClick={() => handleShowAddRow(workoutId)}>
                   Add Lift
                 </button>
               </div>
 
-              <div class="done-btn">
+              <div className="done-btn">
                 <button id="card-done-btn" onClick={() => handleWorkoutDone(workoutId)}>
                   Done
                 </button>
