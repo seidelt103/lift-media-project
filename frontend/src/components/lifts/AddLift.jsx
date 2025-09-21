@@ -1,5 +1,3 @@
-
-
 function AddLift({workoutId, onSave, onCancel, onChange, data, liftNames}) {
   return (
     <tr className="add-row">

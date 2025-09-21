@@ -41,9 +41,6 @@ function WorkoutCards({ lifts, fetchData }) {
   // State for showing/hiding AddWorkout component
   const [showingAddWorkout, setShowingAddWorkout] = useState(false);
 
-  // State to track lifts being added in a new workout
-  const [newWorkoutLifts, setNewWorkoutLifts] = useState([]);
-
   /* Fetch workout table details, must be in this format so fetchData can be passed 
   in, if put in other form then fetchData cannot be passed in since it is called already, 
   no refresh will be applied */
@@ -278,8 +275,6 @@ function WorkoutCards({ lifts, fetchData }) {
         <AddWorkout
           fetchData={fetchData}
           onCancel={handleCancelAddWorkout}
-          lifts={newWorkoutLifts}
-          setLifts={setNewWorkoutLifts}  // allow AddWorkout to update this state
         />
       ) : (
         <div className="overall-card">
@@ -297,9 +292,10 @@ function WorkoutCards({ lifts, fetchData }) {
       {workoutIds.map(workoutId => (
         <div className="overall-card" key={workoutId}>
           <WorkoutDate
-            date={workouts.find(w => w.WorkoutId === workoutId)?.date}
+            workoutId={workoutId}
             isEditing={editingWorkoutId === workoutId}
             onDateChange={(newDate) => handleWorkoutDateChange(workoutId, newDate)}
+            onDateSaved={editingWorkoutId === null} // This will be true when done editing
           />
           <table border="1">
             <thead>
