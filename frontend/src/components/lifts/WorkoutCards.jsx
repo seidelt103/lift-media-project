@@ -3,7 +3,7 @@ import axios from 'axios';
 import './css/WorkoutCards.css';
 import WorkoutDate from './WorkoutDate';
 import AddLift from './AddLift';
-import AddWorkout from './AddWorkout'; 
+import AddWorkout from './AddWorkout';
 
 function WorkoutCards({ lifts, fetchData }) {
 
@@ -40,6 +40,9 @@ function WorkoutCards({ lifts, fetchData }) {
 
   // State for showing/hiding AddWorkout component
   const [showingAddWorkout, setShowingAddWorkout] = useState(false);
+
+  // State to track lifts being added in a new workout
+  const [newWorkoutLifts, setNewWorkoutLifts] = useState([]);
 
   /* Fetch workout table details, must be in this format so fetchData can be passed 
   in, if put in other form then fetchData cannot be passed in since it is called already, 
@@ -272,18 +275,20 @@ function WorkoutCards({ lifts, fetchData }) {
 
       {/* Put add workout card here, should fit within display grid CSS */}
       {showingAddWorkout ? (
-        <AddWorkout 
-          fetchData={fetchData} 
+        <AddWorkout
+          fetchData={fetchData}
           onCancel={handleCancelAddWorkout}
+          lifts={newWorkoutLifts}
+          setLifts={setNewWorkoutLifts}  // allow AddWorkout to update this state
         />
       ) : (
         <div className="overall-card">
-          <button 
-            id="card-edit-btn" 
+          <button
+            id="card-edit-btn"
             onClick={handleShowAddWorkout}
             className="add-workout-btn"
           >
-           Add New Workout
+            Add New Workout
           </button>
         </div>
       )}
